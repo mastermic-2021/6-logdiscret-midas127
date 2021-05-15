@@ -2,6 +2,8 @@ g = Mod(6, 682492462409094395392022581537473179285250139967739310024802121913471
 A = 245036439927702828116237663546936021015004354074422410966568949608523157;
 n = 682492462409094395392022581537473179285250139967739310024802121913471471;
 
+\\Ici il s'agit simplement d'implémenter Pohlig-Hellamn, puisque n a beaucoup de facteurs, cela permet de factoriser le probleme en des sous-problemes plus rapides à traiter.
+
 babystepgiantstep(gen, A1, mod) = {
 	B = sqrtint(mod) + 1;
 	small = Map();
@@ -14,7 +16,7 @@ babystepgiantstep(gen, A1, mod) = {
 	if(mapisdefined(small, val, &v), return(j*B + v);););
 }
 
-PHsimple(gen, h, p, e) = {
+PHsimple(gen, h, p, e) = {  \\ log discret pour p^e
 	x = 0;
 	gam = gen^(p^(e-1));
 	for(k=0, e-1,
@@ -25,7 +27,7 @@ PHsimple(gen, h, p, e) = {
 	return(x);
 }
 
-PH(gen, A2, m) = {
+PH(gen, A2, m) = { \\combine les différents logs discrets pour les facteurs
 	f = factor(m-1);
 	t = matsize(f)[1];
 	liste = vector(t);
